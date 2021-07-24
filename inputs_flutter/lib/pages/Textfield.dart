@@ -11,6 +11,7 @@ class _TextfieldState extends State<Textfield> {
   //guardar los datos que se ingresan en un input
 
   String _email = '', _password = ''; // _ variables privadas
+  bool pass = false, visible = false;
 
   void _enviar() {
     print("email $_email");
@@ -47,7 +48,7 @@ class _TextfieldState extends State<Textfield> {
                       labelText: "Email", //muetsre msj en el input
                       hintText:
                           "correo@domain.com", //texto de ayuda dentro del input
-                      prefixIcon: Icon(
+                      suffixIcon: Icon(
                         Icons.email,
                         color: Colors.pink, //color del icono
                       ), // icono de email al principio
@@ -87,22 +88,44 @@ class _TextfieldState extends State<Textfield> {
                   TextField(
                     decoration: InputDecoration(
                       labelText: "Password", //se muestre mensaje en el input
-                      suffixIcon: Icon(
+                      prefixIcon: Icon(
                         Icons.lock,
                         color: Colors.black, //color icono
                       ), //icono al final
+
+                      suffixIcon: pass
+                          ? FlatButton(
+                              onPressed: () {
+                                setState(() {
+                                  visible = !visible;
+                                });
+                              },
+                              child: Icon(pass //password que se vea
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              minWidth: 30,
+                            )
+                          : null, //ver password
+
                       contentPadding:
                           EdgeInsets.symmetric(vertical: 3, horizontal: 25),
                       // enabledBorder: OutlineInputBorder(
                       //   borderSide:
                       //       BorderSide(color: Colors.green), //color borde
                       // ),
+
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(35),
                         ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Colors.blue, //cambio color del borde
+                        ),
                       ), //InputBorder.none no se vean los bordes
                     ),
+
                     keyboardType: TextInputType
                         .visiblePassword, // number teclado numerico
                     textInputAction: TextInputAction.send, //btn teclado
