@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inputs_flutter/pages/Textfield.dart';
+import 'package:inputs_flutter/pages/listpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,9 +13,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Inputs',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.blue,
       ),
-      home: Textfield(),
+      home: ListPage(),
+      //Textfield(), //pagina de los inputs text y chekcbox
     );
   }
 }

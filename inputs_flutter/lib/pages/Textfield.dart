@@ -4,7 +4,7 @@ class Textfield extends StatefulWidget {
   const Textfield({Key? key}) : super(key: key);
 
   @override
-  _TextfieldState createState() => _TextfieldState();
+  _TextfieldState createState() => _TextfieldState(toString());
 }
 
 class _TextfieldState extends State<Textfield> {
@@ -12,6 +12,23 @@ class _TextfieldState extends State<Textfield> {
 
   String _email = '', _password = ''; // _ variables privadas
   bool pass = false, visible = false;
+
+  bool _terms = false;
+
+  final TextEditingController _controller = TextEditingController();
+  final String defaultValue;
+
+  _TextfieldState(this.defaultValue); //constructor
+
+  void dispose() {
+    _controller.dispose(); //liberar espacio ya una vez usado
+  }
+
+  void initstate() {
+    _controller.addListener(() {
+      print(_controller.text); //mostrar consola datos del input
+    });
+  }
 
   void _enviar() {
     print("email $_email");
@@ -43,6 +60,9 @@ class _TextfieldState extends State<Textfield> {
                 children: [
                   //1er campo de texto
                   TextField(
+                    controller:
+                        _controller, // cambios o valor inicialen el texto
+
                     style: TextStyle(color: Colors.blue), //color del texto
                     decoration: InputDecoration(
                       labelText: "Email", //muetsre msj en el input
@@ -139,8 +159,47 @@ class _TextfieldState extends State<Textfield> {
                     },
                   ),
 
+                  Row(
+                    children: [
+                      SizedBox(
+                        height: 25,
+                        width: 24,
+                        child: Checkbox(
+                          //para terminos y condiciones chekbox
+
+                          materialTapTargetSize: MaterialTapTargetSize
+                              .shrinkWrap, //ajustar tamaño de los terminos y condiciones por defecto
+                          value: _terms,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                _terms = value!; //valor true del cheqbox
+                              },
+                            );
+                          },
+                          activeColor: Colors.blue,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 80,
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _terms = !_terms;
+                            });
+                          },
+                          child: Text(
+                              "Aceptar terminos y condiciones, Aceptar terminos y condiciones Aceptar terminos y condiciones"),
+                        ),
+                      ),
+                    ],
+                  ),
+
                   SizedBox(
-                    height: 25,
+                    height: 5,
                   ),
 
                   SizedBox(
